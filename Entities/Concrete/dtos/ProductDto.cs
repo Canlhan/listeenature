@@ -8,6 +8,8 @@ namespace Entities.Concrete.dtos
 {
     public class ProductDto
     {
+        public int id { get; set; }
+        
        public string soundPath { get; set; }
         public string name { get; set; }
         public int price { get; set; }

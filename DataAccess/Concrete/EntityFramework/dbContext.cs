@@ -1,4 +1,5 @@
 ﻿
+using com.sun.tools.doclets.formats.html.resources;
 using Core.Entities.Concrete;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +14,11 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class dbContext:DbContext
     {
+       
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=localhost;Database=listeNature; Trusted_Connection=true");
+            
         }
 
         public DbSet<Product> Product { get; set; }
@@ -23,7 +26,13 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Cart> Cart { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<Ringtone> Ringtone { get; set; }
+        public DbSet<CreditCard> CreditCard { get; set; }
 
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+         
+        }
 
     }
 }

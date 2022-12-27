@@ -23,8 +23,8 @@ namespace WEBAPII.Controllers
 
 
         [HttpPost("add")]
-        public IActionResult add([FromForm(Name ="sound")] IFormFile ringtone,[FromForm]Product product)
-        {
+        public IActionResult add([FromForm] IFormFile ringtone,[FromForm]Product product)
+      {
 
             var result=_ringtoneService.add(ringtone, product);
             if (result==null)
@@ -34,5 +34,24 @@ namespace WEBAPII.Controllers
             }
             return Ok(result);
         }
+        [HttpDelete("delete/{id}")]
+        public IActionResult delete(int id)     
+        {
+            var ringttone = _ringtoneService.get(id);
+
+            if (!ringttone.Success)
+            {
+                return BadRequest("ringtone yok");
+            }
+            var result = _ringtoneService.deleteRingtone(ringttone.Data);
+            if (result == null)
+            {
+                return BadRequest("olmadı");
+
+            }
+            return Ok(result);
+        }
     }
+    
 }
+

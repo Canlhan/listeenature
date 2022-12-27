@@ -17,6 +17,7 @@ namespace Business.Abstract
         IDataResult<Ringtone> get(int productId);
          
         IDataResult<Ringtone> add(IFormFile ringtone,Product product);
+        IResult deleteRingtone(Ringtone ringtone);
 
     }
 }

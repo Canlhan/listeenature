@@ -26,6 +26,17 @@ namespace WEBAPII.Controllers
         {
             return _userService.GetAll();
         }
+        [HttpGet("{id}")]
+        public  IActionResult getuserById(int id)
+        {
+           var result= _userService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+
+            }
+            return BadRequest(result);
+        }
 
         [HttpPost("add")]
         public bool add(User user)

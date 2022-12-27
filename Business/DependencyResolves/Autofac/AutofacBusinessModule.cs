@@ -23,13 +23,14 @@ namespace BusinessLayer.DependencyResolves.Autofac
             builder.RegisterType<ProductManager>().As<IProductService>().SingleInstance();// 100000 kişiye 1 tane instance üretip onu herkesle paylaşıyor. 100000 tane instance üretmek mümkün değil.
             builder.RegisterType<RingtoneManager>().As<RingtoneService>().SingleInstance();
             builder.RegisterType<OrderManager>().As<IOrderService>().SingleInstance();
-          
+            builder.RegisterType<CreditCardManager>().As<ICreditCardService>().SingleInstance();
             builder.RegisterType<CartManager>().As<ICartService>().SingleInstance();
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
 
+
             builder.RegisterType<EfRingtoneDal>().As<IRingtoneDal>().SingleInstance();
             builder.RegisterType<EfProductDal>().As<IProductDal>().SingleInstance();
-           
+            builder.RegisterType<EfCreditCardDal>().As<ICreditCardDal>().SingleInstance();
             builder.RegisterType<EfOrderDal>().As<IOrderDal>().SingleInstance();
            
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();

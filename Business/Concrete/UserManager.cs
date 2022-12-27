@@ -59,10 +59,15 @@ namespace Business.Concrete
             return  new SuccessDataResult<User>(user,"kullanıcı var");
         }
 
-        public User GetById(int userId)
+        public IDataResult<User> GetById(int userId)
         {
 
-            return _userDal.Get((user) => user.id == userId);
+            var result= _userDal.Get((user) => user.id == userId);
+            if (result==null)
+            {
+                return new ErrorDataResult<User>("kullanıcı yok");
+            }
+            return new SuccessDataResult<User>(result);
         }
 
        

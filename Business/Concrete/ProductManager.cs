@@ -23,18 +23,28 @@ namespace Business.Concrete
         {
             _productDal = productDal;
         }
-        public void  Add( Product product)
+        public IDataResult<Product> Add( Product product)
         {
 
-           
-
-           // var addedproduct = CreatedFile(product).Data;
             _productDal.Add(product);
+
+            var productget = _productDal.Get((produ) => produ.name == product.name);
+            if (product!=null)
+            {
+
+                
+                return new SuccessDataResult<Product>(productget, "oldu");
+
+            }
+            return new ErrorDataResult<Product>();
+           // var addedproduct = CreatedFile(product).Data;
+            
         }
 
-        public List<Product> GetAll()
+        public IDataResult<List<ProductDto>> GetAll()
         {
-          return _productDal.GetAll();
+
+            return new SuccessDataResult<List<ProductDto>>(_productDal.getProductS(), "oldu");
         }
 
         
@@ -44,9 +54,23 @@ namespace Business.Concrete
             return _productDal.Get((product) => product.id == productId);
         }
 
-        public List<Product> getByUserId(int userId)
+        public IDataResult<Product> updateProduct(Product product)
         {
-            return _productDal.GetAll((product) => product.userId == userId);
+             _productDal.Update(product);
+
+            return new SuccessDataResult<Product>("oldu ");
+            
+        }
+
+        public IDataResult<List<ProductDto>> getByUserId(int userId)
+        {
+            var result = _productDal.getProductsCustomerId(userId);
+            if (result!=null)
+            {
+                return new SuccessDataResult<List<ProductDto>>(result);
+            }
+
+            return new ErrorDataResult<List<ProductDto>>();
         }
 
         public IDataResult<List<ProductDto>> productDtoById(int id)
@@ -59,7 +83,7 @@ namespace Business.Concrete
         {
             string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName + @"\Image");
             var uniqueFilename = Guid.NewGuid().ToString("N")
-                + "sound-" + product.userId + "-" + DateTime.Now.ToShortDateString();
+                + "sound-" + product.id + "-" + DateTime.Now.ToShortDateString();
 
            // string source = Path.Combine(product.ringtone);
 
@@ -78,6 +102,13 @@ namespace Business.Concrete
 
             // return new SuccessDataResult<Product>(new Product {  userId = product.userId, ringtone = result, createdat = DateTime.Now }, "resim eklendi");
             return new SuccessDataResult<Product>("HAY");
+        }
+
+        public IResult delete(Product product)
+        {
+
+            _productDal.Delete(product);
+            return new SuccessResult();
         }
     }
 }

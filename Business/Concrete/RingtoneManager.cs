@@ -45,9 +45,23 @@ namespace Business.Concrete
 
         }
 
+        public IResult deleteRingtone(Ringtone ringtone)
+        {
+            _ringtoneDal.Delete(ringtone);
+            return new SuccessResult("silindi");
+        }
+
         public IDataResult<Ringtone> get(int productId)
         {
-            throw new NotImplementedException();
+
+
+            var result = _ringtoneDal.Get((ring) => ring.productId == productId);
+
+            if (result!=null)
+            {
+                return new SuccessDataResult<Ringtone>(result);
+            }
+            return new ErrorDataResult<Ringtone>();
         }
 
         public IDataResult<List<Ringtone>> getAll()

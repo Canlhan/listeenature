@@ -12,7 +12,7 @@ namespace Business.Abstract
    public interface IUserService
     {
         List<User> GetAll();
-        User GetById(int userId);
+       IDataResult<User> GetById(int userId);
         void Add(User user);
 
         IDataResult<User> getByEmail(UserForLogin userForLogin);

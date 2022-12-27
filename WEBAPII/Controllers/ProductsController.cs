@@ -26,10 +26,14 @@ namespace WEBAPII.Controllers
         }
 
         [HttpGet("getall")]
-        public List<Product> getall()
+        public IActionResult getall()
         {
-
-            return _productService.GetAll();
+            var result = _productService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
 
         }
 
@@ -50,6 +54,18 @@ namespace WEBAPII.Controllers
                 return Ok(result);
             }
             return BadRequest(result);
+        }
+
+        [HttpPut("update")]
+        public IActionResult updateproduct(Product product)
+        {
+
+            var result = _productService.updateProduct(product);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest("olmadı");
         }
 
         [HttpPost("add")]
@@ -79,15 +95,31 @@ namespace WEBAPII.Controllers
 
             System.Diagnostics.Debug.WriteLine("SomeText");
             */
-            _productService.Add( product);
-            return Ok("oldu");
+           var result= _productService.Add(product);
+
+            return Ok(result);
         }
 
         [HttpGet("getcustomerid/{userId}")]
-        public List<Product> getByCustomerId(int userId)
+        public IActionResult getByCustomerId(int userId)
         {
+            var result = _productService.getByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
 
-            return _productService.getByUserId(userId);
+        }
+        [HttpDelete("delete")]
+        public IActionResult deleteProduct(Product product)
+        {
+            var result = _productService.delete(product);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
 
         }
     }
